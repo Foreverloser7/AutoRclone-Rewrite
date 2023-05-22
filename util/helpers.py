@@ -43,7 +43,7 @@ def convert_bytes_to_best_unit(bytes):
 # Calculate path size in bytes using RClone
 def calculate_path_size(config_file, src_label, dst_label, action):
     cmd = ['rclone', '--config', config_file, action, '--dry-run', src_label, dst_label]
-    pattern = re.compile("([\d,]+\.\d+? [A-z]{6}), ([0-9]{1,3})", re.M)
+    pattern = re.compile("([\d,]+\.\d+? [A-z]{3}), ([0-9]{1,3})", re.M)
     process = subprocess.Popen(cmd, shell=False, stderr=subprocess.PIPE)
     if process.stdout:
         for line in process.stdout:
@@ -55,7 +55,7 @@ def calculate_path_size(config_file, src_label, dst_label, action):
 
 # Inspired from https://stackoverflow.com/a/42865957
 def rclone_size_to_bytes(size):
-    units = {"B": 1, "KiByte": 10**3, "MiByte": 10**6, "GiByte": 10**9, "TiByte": 10**12}
+    units = {"B": 1, "KiB": 10**3, "MiB": 10**6, "GiB": 10**9, "TiB": 10**12, "PiB": 10**15}
     number, unit = [string.strip() for string in size.split()]
     return int(float(number)*units[unit])
 
